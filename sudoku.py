@@ -11,7 +11,7 @@ def generate_sudoku():
     sudoku_with_zeros = [[sudoku[row][col] for col in range(9)] for row in range(9)]
 
     # cria o puzzle
-    remove_numbers(sudoku_with_zeros)
+    remove_numbers(sudoku_with_zeros, 45)
 
     return sudoku, sudoku_with_zeros
 
