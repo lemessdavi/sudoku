@@ -1,18 +1,18 @@
 def func_objetivo(sudoku):
-    violations = 0  # Contador de violações
+    violations = 0  # contador de violações
 
-    # Verificar as violações nas linhas
+    # verifica as violações nas linhas
     for row in sudoku:
         unique_elements = set(row)
         violations += len(row) - len(unique_elements)
 
-    # Verificar as violações nas colunas
+    # verifica as violações nas colunas
     for col in range(9):
         column = [row[col] for row in sudoku]
         unique_elements = set(column)
         violations += len(column) - len(unique_elements)
 
-    # Verificar as violações nos quadrantes
+    # verifica as violações nos quadrantes
     for i in range(0, 9, 3):
         for j in range(0, 9, 3):
             quadrant = []
@@ -22,7 +22,7 @@ def func_objetivo(sudoku):
             unique_elements = set(quadrant)
             violations += len(quadrant) - len(unique_elements)
 
-    # Contar os zeros como violações
+    # conta os zeros como violações
     for row in sudoku:
         violations += row.count(0)
 
