@@ -6,7 +6,7 @@ import sudoku
 
 import random
 
-def semi_greedy_algorithm(sudoku):
+def semi_greedy_algorithm(sudoku, k):
     violations = funcObjetivo.func_objetivo(sudoku)
 
     while violations > 0:
@@ -16,28 +16,40 @@ def semi_greedy_algorithm(sudoku):
         for i in range(9):
             for j in range(9):
                 if sudoku[i][j] == 0:
-                    top_moves = []
+                    moves = []
                     for num in range(1, 10):
                         sudoku[i][j] = num
                         new_violations = funcObjetivo.func_objetivo(sudoku)
-                        top_moves.append((i, j, num, new_violations))
+                        moves.append((i, j, num, new_violations))
                     sudoku[i][j] = 0  # desfaz tentativa de troca
 
-                    if top_moves:
-                        top_moves.sort(key=lambda x: x[4], descending=True)
-                        top_moves = top_moves
+                    if moves:
+                        top_moves  = []
+                        moves.sort(key=lambda x: x[3])
+                        sliceqnt = int(len(moves)* (k/100))
+                        top_moves= moves[: len(moves) - sliceqnt]
                         random_move = random.choice(top_moves)
-                        i, j, num = random_move
+                        i, j, num, violations_num  = random_move
                         sudoku[i][j] = num
-
-        violations = min_violations
+                        violations = funcObjetivo.func_objetivo(sudoku)
 
         if i == 8 and j == 8:
             break
 
+    return sudoku, violations
 
 
-result, num_violations = semi_greedy_algorithm(sudoku.playable_sudoku)
+sudukinho = [[0, 6, 0, 9, 0, 0, 3, 7, 2],
+[3, 9, 8, 7, 0, 6, 4, 1, 5],
+[2, 0, 7, 1, 3, 0, 0, 8, 9],
+[0, 0, 6, 0, 1, 0, 0, 3, 8],
+[0, 0, 0, 2, 5, 3, 0, 0, 1],
+[0, 0, 0, 8, 6, 7, 0, 9, 4],
+[0, 0, 3, 5, 9, 2, 1, 0, 6],
+[0, 0, 9, 6, 0, 1, 8, 0, 0],
+[6, 0, 2, 3, 0, 0, 0, 5, 7]]
+
+result, num_violations = semi_greedy_algorithm(sudukinho, 65)
 
 print()
 print()
