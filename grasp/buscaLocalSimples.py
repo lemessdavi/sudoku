@@ -3,7 +3,7 @@ import random
 sys.path.append('../sudoku')  
 import funcObjetivo 
 import utils
-from semigreedy.semigreedy import semi_greedy_algorithm
+from semigreedy.semigreedy_random import semi_greedy_algorithm
 from buscalocal.buscaLocalSimplesMA import local_search_algorithm
 
 def local_search_grasp(sudoku):
