@@ -8,7 +8,7 @@ for i in range(1, 11):
     violations = 0
 
     for j in range(10):
-        new_violations, new_sudoku = grasp_iterated_greedy_algorithm(sudoku, 15, 30)
+        new_sudoku, new_violations = grasp_iterated_greedy_algorithm(sudoku, 15, 30)
         violations += new_violations
 
     violations = violations/10

@@ -8,7 +8,7 @@ for i in range(1, 11):
     violations = 0
 
     for j in range(10):
-        new_violations, new_sudoku = local_search_algorithm(sudoku)
+        new_sudoku, new_violations = local_search_algorithm(sudoku)
         violations += new_violations
 
     violations = violations/10
