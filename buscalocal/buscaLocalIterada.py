@@ -2,13 +2,36 @@ import sys
 import random
 from collections import Counter
 sys.path.append('C:\GitHub\sudoku') 
-import utils
+import funcObjetivo
 from buscalocal.buscaLocalSimplesMA import local_search_algorithm
 
-def iterated_local_search_algorithm(sudoku, p):
+def iterated_local_search_algorithm(sudoku, p, positions_editable = []):
 
-    positions_editable = utils.search_empty_positions(sudoku)
-    sudoku = utils.random_fill(sudoku)
+    if len(positions_editable) < 1:
+        len_matrix = len(sudoku)
+
+        #quantos tem de cada numero
+        numbers = Counter(item for row in sudoku for item in row if item != 0)
+        #quantos faltam de cada numero
+        numbers = {key: len_matrix - count for key, count in numbers.items()}
+
+        #marca as posicoes editaveis e preenche
+        for i in range(len(sudoku)):
+            for j in range(len(sudoku[i])):
+                #se a posicao estiver vazia
+                if sudoku[i][j] == 0:
+                    #salva a posicao atual em posicoes editaveis
+                    positions_editable.append((i, j))
+
+                    #popula aleatoriamente a posicao atual
+                    index, qtd = random.choice(list(numbers.items()))
+                    sudoku[i][j] = index
+                    numbers[index] -= 1
+                    if numbers[index] < 1:
+                        numbers.pop(index)
+
+    violations = funcObjetivo.func_objetivo(sudoku)
+
     sudoku, violations = local_search_algorithm(sudoku, positions_editable)
     
     iterations = 0
