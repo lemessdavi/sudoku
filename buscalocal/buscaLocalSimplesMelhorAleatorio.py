@@ -4,7 +4,7 @@ from collections import Counter
 sys.path.append('C:\GitHub\sudoku') 
 import funcObjetivo
 
-def local_search(sudoku):
+def local_search_algorithm(sudoku, positions_editable = []):
 
     len_matrix = len(sudoku)
 
@@ -13,24 +13,27 @@ def local_search(sudoku):
     #quantos faltam de cada numero
     numbers = {key: len_matrix - count for key, count in numbers.items()}
 
-    positions_editable = []
-    for i in range(len(sudoku)):
-        for j in range(len(sudoku[i])):
-            if sudoku[i][j] == 0:
-                #salva posicoes editaveis
-                positions_editable.append((i, j))
+    #se o sudoku já está preenchido, deverá mandar as posicoes editaveis para o sudoku
+    if len(positions_editable) < 1:
+        #marca as posicoes editaveis e preenche
+        for i in range(len(sudoku)):
+            for j in range(len(sudoku[i])):
+                #se a posicao estiver vazia
+                if sudoku[i][j] == 0:
+                    #salva a posicao atual em posicoes editaveis
+                    positions_editable.append((i, j))
 
-                #popula aleatoriamente
-                index, qtd = random.choice(list(numbers.items()))
-                sudoku[i][j] = index
-                numbers[index] -= 1
-                if numbers[index] < 1:
-                    numbers.pop(index)
+                    #popula aleatoriamente a posicao atual
+                    index, qtd = random.choice(list(numbers.items()))
+                    sudoku[i][j] = index
+                    numbers[index] -= 1
+                    if numbers[index] < 1:
+                        numbers.pop(index)
 
     violations = funcObjetivo.func_objetivo(sudoku)
     iterations = 0
 
-    while violations > 0 and iterations < 100:
+    while violations > 0 and iterations < 1000:
         
         positions_editable_aux = positions_editable.copy()
         best_possible = []
@@ -90,7 +93,7 @@ sudokinho = [
     [6, 0, 2, 3, 0, 0, 0, 5, 7]
 ]
 
-result, num_violations = local_search(sudokinho)
+result, num_violations = local_search_algorithm(sudokinho)
 
 printSudoku(result)
 print("Número de violações:", num_violations)
