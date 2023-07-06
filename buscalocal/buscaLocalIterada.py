@@ -32,7 +32,7 @@ def iterated_local_search_algorithm(sudoku, p, max_iterations, positions_editabl
 
     violations = funcObjetivo.func_objetivo(sudoku)
 
-    sudoku, violations = local_search_algorithm(sudoku, positions_editable)
+    sudoku, violations = local_search_algorithm(sudoku, 750, positions_editable)
     
     iterations = 0
 
@@ -55,7 +55,7 @@ def iterated_local_search_algorithm(sudoku, p, max_iterations, positions_editabl
 
             perturbacao += 1
 
-        new_sudoku, new_violations = local_search_algorithm(new_sudoku, positions_editable)
+        new_sudoku, new_violations = local_search_algorithm(new_sudoku, 750, positions_editable)
 
         if violations > new_violations:
             sudoku = new_sudoku.copy()
