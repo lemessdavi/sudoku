@@ -28,30 +28,3 @@ def local_search_grasp(sudoku):
         iterations += 1
 
     return best_sudoku, best_violations
-
-def printSudoku(sudoku): 
-    print()
-    print()
-    print()
-
-    for row in sudoku:
-        print(row)
-
-    print()
-
-sudokinho = [
-    [0, 6, 0, 9, 0, 0, 3, 7, 2],
-    [3, 9, 8, 7, 0, 6, 4, 1, 5],
-    [2, 0, 7, 1, 3, 0, 0, 8, 9],
-    [0, 0, 6, 0, 1, 0, 0, 3, 8],
-    [0, 0, 0, 2, 5, 3, 0, 0, 1],
-    [0, 0, 0, 8, 6, 7, 0, 9, 4],
-    [0, 0, 3, 5, 9, 2, 1, 0, 6],
-    [0, 0, 9, 6, 0, 1, 8, 0, 0],
-    [6, 0, 2, 3, 0, 0, 0, 5, 7]
-]
-
-result, num_violations = local_search_grasp(sudokinho)
-
-printSudoku(result)
-print("Número de violações:", num_violations)

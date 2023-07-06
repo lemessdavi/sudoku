@@ -75,16 +75,3 @@ def greedy_algorithm(sudoku):
         iterations += 1
 
     return sudoku, violations
-
-result, num_violations = greedy_algorithm(sudoku.playable_sudoku)
-
-print()
-print()
-print()
-
-for row in result:
-    print(row)
-
-print()
-
-print("Número de violações:", num_violations)
