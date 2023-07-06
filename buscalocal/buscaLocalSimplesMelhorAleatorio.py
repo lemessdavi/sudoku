@@ -1,0 +1,96 @@
+import sys
+import random
+from collections import Counter
+sys.path.append('C:\GitHub\sudoku') 
+import funcObjetivo
+
+def local_search(sudoku):
+
+    len_matrix = len(sudoku)
+
+    #quantos tem de cada numero
+    numbers = Counter(item for row in sudoku for item in row if item != 0)
+    #quantos faltam de cada numero
+    numbers = {key: len_matrix - count for key, count in numbers.items()}
+
+    positions_editable = []
+    for i in range(len(sudoku)):
+        for j in range(len(sudoku[i])):
+            if sudoku[i][j] == 0:
+                #salva posicoes editaveis
+                positions_editable.append((i, j))
+
+                #popula aleatoriamente
+                index, qtd = random.choice(list(numbers.items()))
+                sudoku[i][j] = index
+                numbers[index] -= 1
+                if numbers[index] < 1:
+                    numbers.pop(index)
+
+    violations = funcObjetivo.func_objetivo(sudoku)
+    iterations = 0
+
+    while violations > 0 and iterations < 100:
+        
+        positions_editable_aux = positions_editable.copy()
+        best_possible = []
+
+        #gera vizinhanca
+        while len(positions_editable_aux) > 1:
+            #seleciona duas posicoes aleatorias e remove as posicoes pra nao serem mais selecionadas
+            ai, aj = random.choice(positions_editable_aux)
+            positions_editable_aux.remove((ai, aj))
+            bi, bj = random.choice(positions_editable_aux)
+            positions_editable_aux.remove((bi, bj))
+
+            #swap
+            sudoku[ai][aj], sudoku[bi][bj] = sudoku[bi][bj], sudoku[ai][aj]
+
+            #calcula funcao objetivo para vizinho
+            violations_new = funcObjetivo.func_objetivo(sudoku)
+
+            #se é uma melhoria
+            if violations > violations_new:
+                #adiciona posicoes no array de possiveis melhoras
+                best_possible.append((ai, aj, bi, bj))
+
+            #desfaz swap
+            sudoku[ai][aj], sudoku[bi][bj] = sudoku[bi][bj], sudoku[ai][aj]
+
+        if len(positions_editable_aux) > 0:
+            #seleciona aleatoriamente um possivel melhora
+            best_move = random.choice(positions_editable_aux)
+
+            #faz o swap
+            sudoku[best_move[0]][best_move[1]], sudoku[best_move[2]][best_move[3]] = sudoku[best_move[2]][best_move[3]], sudoku[best_move[0]][best_move[1]]
+
+        iterations += 1
+
+    return sudoku, violations
+
+def printSudoku(sudoku): 
+    print()
+    print()
+    print()
+
+    for row in sudoku:
+        print(row)
+
+    print()
+
+sudokinho = [
+    [0, 6, 0, 9, 0, 0, 3, 7, 2],
+    [3, 9, 8, 7, 0, 6, 4, 1, 5],
+    [2, 0, 7, 1, 3, 0, 0, 8, 9],
+    [0, 0, 6, 0, 1, 0, 0, 3, 8],
+    [0, 0, 0, 2, 5, 3, 0, 0, 1],
+    [0, 0, 0, 8, 6, 7, 0, 9, 4],
+    [0, 0, 3, 5, 9, 2, 1, 0, 6],
+    [0, 0, 9, 6, 0, 1, 8, 0, 0],
+    [6, 0, 2, 3, 0, 0, 0, 5, 7]
+]
+
+result, num_violations = local_search(sudokinho)
+
+printSudoku(result)
+print("Número de violações:", num_violations)
