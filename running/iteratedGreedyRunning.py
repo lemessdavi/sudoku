@@ -3,7 +3,7 @@ sys.path.append('../sudoku')
 import utils
 from iteratedgreedy.iteratedgreedy import iterated_greedy_algorithm
 
-for index_instace in range(1, 11):
+for index_instace in range(20, 21):
     violations = 0
 
     for index_tentativa in range(10):

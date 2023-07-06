@@ -3,7 +3,7 @@ sys.path.append('../sudoku')
 import utils
 from grasp.iteratedGreedy import grasp_iterated_greedy_algorithm
 
-for i in range(1, 11):
+for i in range(11, 21):
     violations = 0
 
     for j in range(10):
