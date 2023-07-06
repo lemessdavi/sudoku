@@ -60,12 +60,14 @@ def local_search_algorithm(sudoku, positions_editable = []):
             #desfaz swap
             sudoku[ai][aj], sudoku[bi][bj] = sudoku[bi][bj], sudoku[ai][aj]
 
-        if len(positions_editable_aux) > 0:
+        if len(best_possible) > 0:
             #seleciona aleatoriamente um possivel melhora
-            best_move = random.choice(positions_editable_aux)
+            best_move = random.choice(best_possible)
 
             #faz o swap
             sudoku[best_move[0]][best_move[1]], sudoku[best_move[2]][best_move[3]] = sudoku[best_move[2]][best_move[3]], sudoku[best_move[0]][best_move[1]]
+            violations = funcObjetivo.func_objetivo(sudoku)
+
 
         iterations += 1
 
