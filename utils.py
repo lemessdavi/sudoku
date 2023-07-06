@@ -23,3 +23,13 @@ def random_fill(sudoku):
                 if numbers[index] < 1:
                     numbers.pop(index)
     return sudoku
+
+def read_instance(index):
+    data = []
+    file = open('instances/' + str(index), 'r')
+    for line in file.readlines():
+        line = line.strip()
+        if line != '':
+            data.append(line.split(', '))
+    file.close()
+    return data
