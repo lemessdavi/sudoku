@@ -30,6 +30,6 @@ def read_instance(index):
     for line in file.readlines():
         line = line.strip()
         if line != '':
-            data.append(line.split(', '))
+            data.append([int(x) for x in line.split(', ')])
     file.close()
     return data
