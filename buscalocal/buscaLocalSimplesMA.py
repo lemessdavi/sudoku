@@ -6,15 +6,15 @@ import funcObjetivo
 
 def local_search_algorithm(sudoku, positions_editable = []):
 
-    len_matrix = len(sudoku)
-
-    #quantos tem de cada numero
-    numbers = Counter(item for row in sudoku for item in row if item != 0)
-    #quantos faltam de cada numero
-    numbers = {key: len_matrix - count for key, count in numbers.items()}
-
     #se o sudoku já está preenchido, deverá mandar as posicoes editaveis para o sudoku
     if len(positions_editable) < 1:
+        len_matrix = len(sudoku)
+
+        #quantos tem de cada numero
+        numbers = Counter(item for row in sudoku for item in row if item != 0)
+        #quantos faltam de cada numero
+        numbers = {key: len_matrix - count for key, count in numbers.items()}
+
         #marca as posicoes editaveis e preenche
         for i in range(len(sudoku)):
             for j in range(len(sudoku[i])):
@@ -33,7 +33,7 @@ def local_search_algorithm(sudoku, positions_editable = []):
     violations = funcObjetivo.func_objetivo(sudoku)
     iterations = 0
 
-    while violations > 0 and iterations < 1000:
+    while violations > 0 and iterations < 100:
         
         positions_editable_aux = positions_editable.copy()
         best_possible = []
@@ -98,4 +98,4 @@ sudokinho = [
 result, num_violations = local_search_algorithm(sudokinho)
 
 printSudoku(result)
-print("Número de violações:", num_violations)
+print("Número de violações: MA ", num_violations)
