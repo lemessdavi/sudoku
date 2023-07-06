@@ -8,7 +8,7 @@ for i in range(1, 11):
     violations = 0
 
     for j in range(10):
-        new_sudoku, new_violations = iterated_local_search_grasp(sudoku)
+        new_sudoku, new_violations = iterated_local_search_grasp(sudoku, 5)
         violations += new_violations
 
     violations = violations/10
