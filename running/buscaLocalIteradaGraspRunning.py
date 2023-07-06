@@ -12,4 +12,4 @@ for i in range(1, 11):
         violations += new_violations
 
     violations = violations/10
-    print('Instância nº ' + i + ' - Média de violações: ' + violations)
+    print('Instância nº ' + str(i) + ' - Média de violações: ' + str(violations))
