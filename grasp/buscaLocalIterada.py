@@ -5,7 +5,7 @@ import utils
 from semigreedy.semigreedy_random import semi_greedy_algorithm
 from buscalocal.buscaLocalIterada import iterated_local_search_algorithm
 
-def iterated_local_search_grasp(sudoku, p, max_iterations):
+def iterated_local_search_grasp(sudoku, p, max_iterations, I):
 
     positions_editable = utils.search_empty_positions(sudoku)
 
@@ -15,10 +15,10 @@ def iterated_local_search_grasp(sudoku, p, max_iterations):
     best_violations = funcObjetivo.func_objetivo(sudoku)
     iterations = 0
 
-    while best_violations > 0 and iterations < max_iterations:
+    while best_violations > 0 and iterations < (max_iterations - (max_iterations * I/100)):
         
         new_sudoku, new_violations = semi_greedy_algorithm(sudoku, 10)
-        new_sudoku, new_violations = iterated_local_search_algorithm(new_sudoku, p, 10, positions_editable)
+        new_sudoku, new_violations = iterated_local_search_algorithm(new_sudoku, p, max_iterations * I/100, positions_editable)
 
         if best_violations > new_violations:
             best_sudoku = new_sudoku

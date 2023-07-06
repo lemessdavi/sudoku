@@ -30,8 +30,6 @@ def iterated_local_search_algorithm(sudoku, p, max_iterations, positions_editabl
                     if numbers[index] < 1:
                         numbers.pop(index)
 
-    violations = funcObjetivo.func_objetivo(sudoku)
-
     sudoku, violations = local_search_algorithm(sudoku, 750, positions_editable)
     
     iterations = 0
@@ -44,7 +42,7 @@ def iterated_local_search_algorithm(sudoku, p, max_iterations, positions_editabl
         new_sudoku = sudoku.copy()
         perturbacao = 0
 
-        while perturbacao < p:
+        while perturbacao < p and len(aux_positions_editable) > 1:
             ai, aj = random.choice(aux_positions_editable)
             aux_positions_editable.remove((ai, aj))
             bi, bj = random.choice(aux_positions_editable)
