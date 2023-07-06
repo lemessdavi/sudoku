@@ -6,7 +6,7 @@ import funcObjetivo
 import random
 
 
-def iterated_greedy_algorithm(sudoku, k, D, max_iterations ,indices_vazios = []):
+def iterated_greedy_algorithm(sudoku, k, D, max_iterations, indices_vazios = []):
     violations = funcObjetivo.func_objetivo(sudoku)
     iterations = 0
 
