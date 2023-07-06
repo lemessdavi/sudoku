@@ -5,7 +5,7 @@ sys.path.append('C:\GitHub\sudoku')
 import funcObjetivo
 from buscalocal.buscaLocalSimplesMA import local_search_algorithm
 
-def iterated_local_search_algorithm(sudoku, p, positions_editable = []):
+def iterated_local_search_algorithm(sudoku, p, max_iterations, positions_editable = []):
 
     if len(positions_editable) < 1:
         len_matrix = len(sudoku)
@@ -36,7 +36,7 @@ def iterated_local_search_algorithm(sudoku, p, positions_editable = []):
     
     iterations = 0
 
-    while violations > 0 and iterations < 100:
+    while violations > 0 and iterations < max_iterations:
         
         aux_positions_editable = positions_editable.copy()
 

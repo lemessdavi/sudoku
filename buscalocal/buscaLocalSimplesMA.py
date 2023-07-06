@@ -4,7 +4,7 @@ from collections import Counter
 sys.path.append('C:\GitHub\sudoku') 
 import funcObjetivo
 
-def local_search_algorithm(sudoku, positions_editable = []):
+def local_search_algorithm(sudoku, max_iterations, positions_editable = []):
 
     #se o sudoku já está preenchido, deverá mandar as posicoes editaveis para o sudoku
     if len(positions_editable) < 1:
@@ -33,7 +33,7 @@ def local_search_algorithm(sudoku, positions_editable = []):
     violations = funcObjetivo.func_objetivo(sudoku)
     iterations = 0
 
-    while violations > 0 and iterations < 100:
+    while violations > 0 and iterations < max_iterations:
         
         positions_editable_aux = positions_editable.copy()
         best_possible = []
