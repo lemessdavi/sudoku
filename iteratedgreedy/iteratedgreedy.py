@@ -1,3 +1,4 @@
+from collections import Counter
 import sys
 import random
 sys.path.append('../sudoku') 
@@ -5,24 +6,43 @@ import funcObjetivo
 import random
 
 
-def iterated_greedy_algorithm(sudoku, k, D):
+def iterated_greedy_algorithm(sudoku, k, D, max_iterations ,indices_vazios = []):
     violations = funcObjetivo.func_objetivo(sudoku)
     iterations = 0
 
-    #guarda todos as celulas que podem ser destruidas depois
-    indices_vazios = []
-    for i in range(9):
-        for j in range(9):
-            if sudoku[i][j] == 0:
-                indices_vazios.append((i, j))
+     #se o sudoku já está preenchido, deverá mandar as posicoes editaveis para o sudoku
+    if len(indices_vazios) < 1:
+        len_matrix = len(sudoku)
 
-    while violations > 0 and iterations < 1000:
+        #quantos tem de cada numero
+        numbers = Counter(item for row in sudoku for item in row if item != 0)
+        #quantos faltam de cada numero
+        numbers = {key: len_matrix - count for key, count in numbers.items()}
+
+        #marca as posicoes editaveis e preenche
+        for i in range(len(sudoku)):
+            for j in range(len(sudoku[i])):
+                #se a posicao estiver vazia
+                if sudoku[i][j] == 0:
+                    #salva a posicao atual em posicoes editaveis
+                    indices_vazios.append((i, j))
+
+                    #popula aleatoriamente a posicao atual
+                    index, qtd = random.choice(list(numbers.items()))
+                    sudoku[i][j] = index
+                    numbers[index] -= 1
+                    if numbers[index] < 1:
+                        numbers.pop(index)
+
+    violations = funcObjetivo.func_objetivo(sudoku)
+    iterations = 0
+
+    while violations > 0 and iterations < max_iterations:
         random.shuffle(indices_vazios)
 
-        if iterations != 0:
-            for i in range(D):
-                row, col = indices_vazios[i]
-                sudoku[row][col] = 0
+        for i in range(D):
+            row, col = indices_vazios[i]
+            sudoku[row][col] = 0
 
         # passa por todas as celulas vazias
         for i,j in indices_vazios:
@@ -65,7 +85,7 @@ for row in sudukinho:
 
 print()
 
-result, num_violations = iterated_greedy_algorithm(sudukinho, 15, 30)
+result, num_violations = iterated_greedy_algorithm(sudukinho, 15, 30, max_iterations=100)
 
 print()
 
