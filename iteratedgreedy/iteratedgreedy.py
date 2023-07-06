@@ -1,6 +1,6 @@
 import sys
 import random
-sys.path.append('/Users/lemes/Documents/Sudoku/sudoku') 
+sys.path.append('../sudoku') 
 import funcObjetivo
 import random
 
